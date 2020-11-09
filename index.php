@@ -35,6 +35,6 @@ try {
         echo "<p>ZonaHoraria: " . $details->timezone . "</p>";
     }
 } catch (Exception $e) {
-    echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+    echo 'Excepción: ',  $e->getMessage(), "\n";
 }
 ?>
