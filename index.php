@@ -1,63 +1,40 @@
 <?php
 require_once 'vendor/autoload.php';
-use ipinfo\ipinfo\IPinfo;
+
 use Foolz\Inet\Inet;
+use ipinfo\ipinfo\IPinfo;
 
-$client = new IPinfo();
-$num = new Inet();
+try {
+    $num = new Inet();
+    $client = new IPinfo();
 
-echo "<!DOCTYPE html>
-<html>
+    echo "  <!DOCTYPE>
+        <html>
+        <head></head>
+        <body>
+            <h1>IPV4</h1>
+            <form action='' method='GET'>
+                <p>Introducir el numero:</p>
+                <p><input type='text' name='num' placeholder='Escribe el numero'></p>
+                <input name='Localizar' type='submit' value='Localizar'></button>
+            </form>
+        </body>
+        </html>";
 
-<head>
-    <title>Ipv4</title>
-</head>
-<body>
-<form  method='Post'>
-<p>Escribe tu numero</p>
-<input type='text' name='ip' />
-<input type='submit'value='Calcular' />
-</form>
-
-</form>
-</body>
-</html>";
-if (isset($_REQUEST['Calcular'])){
-
-
-$decimal_ip = $num->ptod("127.0.0.1");
-$ip = $num->dtop($decimal_ip);
-
-print("Decimal =$decimal_ip");
-print("<br>");
-print("Ip=$ip");
-print("<br>");
-
-
-
-$ip_address = '213.177.221.24';
-$details = $client->getDetails($ip_address);
-
-echo "Ciudad = $details->city";
-print("<br>");
-echo "Pais = $details->country";
-print("<br>");
-echo "Nombre del Pais = $details->country_name";
-print("<br>");
-echo "Localizacion = $details->loc";
-print("<br>");
-echo "Codigo Postal = $details->postal";
-print("<br>");
-echo "Zona Horaria = $details->timezone";
-print("<br>");
-echo "Region = $details->region";
-print("<br>");
-echo "Latitud = $details->latitude";
-print("<br>");
-echo "Longitud = $details->longitude";
-print("<br>");
+    if (isset($_REQUEST['Localizar'])) {
+        $decimal_ip = htmlspecialchars($_REQUEST['num']);
+        $dir_ip = $num->dtop($decimal_ip);
+        echo "<p>IP Decimal: " . $decimal_ip . "</p>";
+        $details = $client->getDetails($dir_ip);
+        echo "<p>IP: " . $details->ip . "</p>";
+        echo "<p>Ciudad: " . $details->city . "</p>";
+        echo "<p>Region: " . $details->region . "</p>";
+        echo "<p>Pais: " . $details->country . "</p>";
+        echo "<p>Localizacion: " . $details->loc . "</p>";
+        echo "<p>CP: " . $details->postal . "</p>";
+        echo "<p>ZonaHoraria: " . $details->timezone . "</p>";
+    }
+} catch (Exception $e) {
+    echo 'Excepción capturada: ',  $e->getMessage(), "\n";
 }
 ?>
-
-
-
